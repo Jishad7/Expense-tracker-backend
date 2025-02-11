@@ -1,9 +1,11 @@
 const {Sequelize} = require('sequelize');
 
-const sequelize = new Sequelize('mypgdb_g9wz','mypgdb_g9wz_user','0zpkoQeAoYWqPELzyJIvOCOqUF3D7aAD',{
-    host:'dpg-culf9n5svqrc73ccu410-a',
-    dialect:'postgres'
-});
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    ssl: {
+      rejectUnauthorized: false, // Required for Render to work with PostgreSQL
+    },
+  });
 
 sequelize.authenticate()
     .then(()=>console.log('Connected to postgresql!'))
